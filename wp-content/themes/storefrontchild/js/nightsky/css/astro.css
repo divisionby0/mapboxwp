@@ -1,0 +1,90 @@
+.new_section {
+   clear: both;
+   border-top: 1px solid #444;
+   margin-top: 1.5em;
+   padding-top: 2em;
+}
+
+#main {
+   margin-left: auto;
+   margin-right: auto;
+   width: auto;
+   padding-top: 5%;
+   padding-left: 12px;
+}
+
+h1 {
+   font-weight: bold;
+   color: #A98;
+   font-size: 1.5em;
+   line-height: 1em;
+   text-align: left;
+   padding-top: 1em;
+}
+
+h2 {
+   font-weight: normal;
+   color: #A98;
+   text-align: left;
+   font-size: 1.2em;
+   line-height: 0.5em;
+   padding-bottom: 1em;
+}
+
+h3 {
+   font-weight: bold;
+   color: #A98;
+   text-align: left;
+   font-size: 1.0em;
+   line-height: 0.5em;
+   padding-top: 1.0em;
+   padding-bottom: 0.5em;
+}
+
+h4 {
+   font-weight: normal;
+   color: #A98;
+   text-align: left;
+   font-size: 1.0em;
+   line-height: 0.5em;
+   padding-top: 0.5em;
+}
+
+#validator {
+   clear: both;
+   text-align: center;
+}
+
+#validator a {
+   border: none;
+}
+
+#validator img {
+   border: 0;
+   width: 88px;
+   height: 31px;
+   margin: 2px 6px 2px 10px;
+}
+
+.unsupported {
+   color: #F44;
+}
+
+table {
+   width: 75%;
+   margin: 1.5em auto 1.5em auto;
+   text-align: center;
+   color: #A98;
+}
+#planicanvas{
+   width: 44%;
+   height:44%;
+}
+
+.starmapEditorButton{
+   width: 100%!important;
+   height: 34px!important;
+   padding: 6px 12px!important;
+   margin: 0.2em!important;
+}
+
