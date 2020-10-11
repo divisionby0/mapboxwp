@@ -39,7 +39,6 @@ class TemplateElementView implements ITemplateSizeProvider{
 
         while(viewsIterator.hasNext()){
             var currentLayerView:LayerView = viewsIterator.next();
-            console.log("destroying currentLayerView=",currentLayerView);
             if(currentLayerView){
                 currentLayerView.destroy();
                 currentLayerView = null;
@@ -123,7 +122,6 @@ class TemplateElementView implements ITemplateSizeProvider{
                     layer.setView(layerView);
                     break;
             }
-            console.log()
             this.views.add(layerView);
         }
         this.resize();

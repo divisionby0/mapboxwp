@@ -17,9 +17,10 @@ var CityTemplateLayer = (function (_super) {
         this.createListener();
     }
     CityTemplateLayer.prototype.onDestroy = function () {
-        var _this = this;
-        EventBus.removeEventListener(EditorEvent.CITY_CHANGED, function (data) { return _this.onCityChanged(data); });
-        EventBus.removeEventListener(EditorEvent.CITY_VISIBILITY_CHANGED, function (data) { return _this.onCityVisibilityChanged(data); });
+        /*
+        EventBus.removeEventListener(EditorEvent.CITY_CHANGED, (data)=>this.onCityChanged(data));
+        EventBus.removeEventListener(EditorEvent.CITY_VISIBILITY_CHANGED, (data)=>this.onCityVisibilityChanged(data));
+        */
     };
     CityTemplateLayer.prototype.createListener = function () {
         var _this = this;

@@ -20,6 +20,7 @@ class TemplatesParser{
     private j$:any;
 
     private _that:any;
+    private starmaps:StarmapLayerController[] = new Array(); // prevent GC ?
     
     constructor(j$:any){
         this.j$ = j$;
@@ -240,6 +241,7 @@ class TemplatesParser{
                         templateLayer = new BorderCircleTemplateLayer(id, aspectRatio, type, left, top, right, bottom, changeable, radius, radiusWidth, radiusColor, border);
                         layers.add(templateLayer);
                         break;
+
                     case LayerType.STARMAP_LAYER_TYPE:
                         var starsColor:string = layerData.getAttribute("starsColor");
                         var backgroundColor:string = layerData.getAttribute("backgroundColor");
@@ -248,7 +250,11 @@ class TemplatesParser{
                         var borderWeight:number = parseFloat(layerData.getAttribute("borderWeight"));
 
                         templateLayer = new StarmapLayerModel(id, aspectRatio, type, left, top, right, bottom, changeable, starsColor, backgroundColor, constellationColor, borderColor, borderWeight);
-                        new StarmapLayerController((templateLayer as StarmapLayerModel));
+
+                        var starmapLayerController:StarmapLayerController = new StarmapLayerController((templateLayer as StarmapLayerModel));
+                        this.starmaps.push(starmapLayerController);
+
+                        console.log("new starmap layer controller added ",starmapLayerController);
                         layers.add(templateLayer);
 
                         break;
@@ -304,7 +310,7 @@ class TemplatesParser{
 
             collection.add(template);
         }
-        
+
         return collection;
     }
     

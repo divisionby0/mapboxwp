@@ -73,7 +73,6 @@ class LayerView{
     }
 
     protected onDestroy() {
-        console.log("onDestroy() this.layerContainer=",this.layerContainer);
         if(this.layerContainer){
             this.layerContainer.remove();
         }

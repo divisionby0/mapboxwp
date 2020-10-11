@@ -14,9 +14,11 @@ class DateTimeTemplateLayer extends TextTemplateLayer{
     }
 
     protected onDestroy():void {
+        /*
         EventBus.removeEventListener(EditorEvent.DATE_TIME_CHANGED, (data)=>this.onDateTimeChanged(data));
         EventBus.removeEventListener(EditorEvent.DATE_VISIBILITY_CHANGED, (data)=>this.onDateVisibilityChanged(data));
         EventBus.removeEventListener(EditorEvent.TIME_VISIBILITY_CHANGED, (data)=>this.onTimeVisibilityChanged(data));
+        */
     }
     
     protected createListener() {

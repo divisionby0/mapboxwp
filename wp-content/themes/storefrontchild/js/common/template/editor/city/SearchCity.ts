@@ -16,14 +16,17 @@ class SearchCity{
     private geocodingSettings:string[];
 
     constructor(j$:any, currentTemplate:Template){
+        console.log("new SearchCity");
         this.j$ = j$;
         this.currentTemplate = currentTemplate;
+        this.createListeners();
         this.getGeocodingAdminData();
     }
 
     private setDefaultCity():void{
         console.log("set default city this.currentTemplate=",this.currentTemplate);
         console.log("this.currentCoord=",this.currentCoord);
+
         this.onCityChanged({coord:[this.currentTemplate.getLat(), this.currentTemplate.getLng()], city:this.currentTemplate.getCity()});
         EventBus.dispatchEvent(EditorEvent.CITY_CHANGED, {city:this.currentCity,coord:this.currentCoord});
     }
@@ -53,6 +56,7 @@ class SearchCity{
             alert("Error parsing admin geocoding data");
         }
     }
+
     private onGeocodingAdminDataLoadError(error:any):void{
         console.error("onGeocodingAdminDataLoadError. error=",error);
     }
@@ -60,7 +64,7 @@ class SearchCity{
     private onGeocodingAdminDataReady():void{
         this.createGeocodingService();
         this.create();
-        this.createListeners();
+        //this.createListeners();
 
         this.setDefaultCity();
     }
@@ -76,21 +80,17 @@ class SearchCity{
     }
 
     private createListeners():void {
+        console.log("createListeners()");
         EventBus.addEventListener(EditorEvent.CITY_CHANGED, (data)=>this.onCityChanged(data));
-
-        // find city by template's data
-        //EventBus.addEventListener(GeocodingService.ON_GEOCODING_RESULT, (data)=>this.onDefaultCityGeocodingResult(data));
-
-        //this.getDefaultCity();
     }
 
     private onCityChanged(data:any):void{
+        console.log("onCityChanged data=",data);
         var coord:any = data.coord;
         var city:string = data.city;
 
         this.j$("#user_lat").val(parseFloat(coord[0]).toFixed(4));
         this.j$("#user_lon").val(parseFloat(coord[1]).toFixed(4));
-
 
         // update template
         this.currentTemplate.setCity(city);
@@ -100,9 +100,8 @@ class SearchCity{
         this.currentCity = city;
         this.currentCoord = coord;
 
+        console.log("coord changed");
         EventBus.dispatchEvent(EditorEvent.COORDINATES_CHANGED, coord);
-
-
         EventBus.dispatchEvent("UPDATE_STARMAP", null);
     }
 

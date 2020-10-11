@@ -7,7 +7,6 @@ var SearchCityResultParses = (function () {
     SearchCityResultParses.prototype.parse = function (data) {
         var collection = new List("cities");
         var status = data.status;
-        console.log("parsing geocoding result...");
         if (status == "success") {
             var responseStatus = data.data.status;
             if (responseStatus == "REQUEST_DENIED") {

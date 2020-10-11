@@ -20,10 +20,11 @@ var DateTimeTemplateLayer = (function (_super) {
         this.createListener();
     }
     DateTimeTemplateLayer.prototype.onDestroy = function () {
-        var _this = this;
-        EventBus.removeEventListener(EditorEvent.DATE_TIME_CHANGED, function (data) { return _this.onDateTimeChanged(data); });
-        EventBus.removeEventListener(EditorEvent.DATE_VISIBILITY_CHANGED, function (data) { return _this.onDateVisibilityChanged(data); });
-        EventBus.removeEventListener(EditorEvent.TIME_VISIBILITY_CHANGED, function (data) { return _this.onTimeVisibilityChanged(data); });
+        /*
+        EventBus.removeEventListener(EditorEvent.DATE_TIME_CHANGED, (data)=>this.onDateTimeChanged(data));
+        EventBus.removeEventListener(EditorEvent.DATE_VISIBILITY_CHANGED, (data)=>this.onDateVisibilityChanged(data));
+        EventBus.removeEventListener(EditorEvent.TIME_VISIBILITY_CHANGED, (data)=>this.onTimeVisibilityChanged(data));
+        */
     };
     DateTimeTemplateLayer.prototype.createListener = function () {
         var _this = this;

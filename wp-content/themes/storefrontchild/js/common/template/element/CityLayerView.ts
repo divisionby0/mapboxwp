@@ -3,9 +3,11 @@ class CityLayerView extends TextLayerView{
 
     protected onDestroy() {
         super.onDestroy();
+        /*
         EventBus.removeEventListener(EditorEvent.CITY_CHANGED, (data)=>this.onCityChanged(data));
         EventBus.removeEventListener(EditorEvent.TEXT_1_CHANGED, (data)=>this.onCityTextChanged(data));
         EventBus.removeEventListener(EditorEvent.CITY_VISIBILITY_CHANGED, (data)=>this.onCityVisibilityChanged(data));
+        */
     }
     
     protected createListeners():void{

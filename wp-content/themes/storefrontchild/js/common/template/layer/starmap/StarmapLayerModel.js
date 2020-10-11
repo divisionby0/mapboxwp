@@ -20,7 +20,6 @@ var StarmapLayerModel = (function (_super) {
         this.borderVisible = true;
         this.hasColoredStars = false;
         this.hasConstellations = true;
-        console.log("new StarmapLayerModel");
         this.starsColor = color;
         this.backgroundColor = backgroundColor;
         this.constellationColor = constellationColor;
@@ -52,11 +51,10 @@ var StarmapLayerModel = (function (_super) {
         }
     };
     StarmapLayerModel.prototype.onCityChanged = function (data) {
-        //console.log("onCityChanged this.view=" + this.view);
         this.currentCity = data.city;
         this.currentCoord = data.coord;
         if (this.view) {
-            this.view.setCoord(data.coord);
+            this.view.setCoord(this.currentCoord);
         }
     };
     StarmapLayerModel.prototype.hasBackgroundColor = function () {
@@ -127,7 +125,6 @@ var StarmapLayerModel = (function (_super) {
     };
     StarmapLayerModel.prototype.setHasConstellations = function (value) {
         this.hasConstellations = value;
-        console.log("setHasConstellations this.view=", this.view);
         try {
             this.view.setHasConstellations(this.hasConstellations);
         }

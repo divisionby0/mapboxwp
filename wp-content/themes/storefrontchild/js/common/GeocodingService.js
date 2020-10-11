@@ -16,9 +16,7 @@ var GeocodingService = (function () {
     };
     GeocodingService.prototype.getCoordinates = function (cityName) {
         var _this = this;
-        console.log("getCoordinates cityName=" + cityName);
         var url = this.buildUrl(cityName);
-        console.log("url=", url);
         /*
         this.j$.ajax({
             type: "POST",

@@ -55,7 +55,6 @@ var LayerView = (function () {
     LayerView.prototype.createListeners = function () {
     };
     LayerView.prototype.onDestroy = function () {
-        console.log("onDestroy() this.layerContainer=", this.layerContainer);
         if (this.layerContainer) {
             this.layerContainer.remove();
         }

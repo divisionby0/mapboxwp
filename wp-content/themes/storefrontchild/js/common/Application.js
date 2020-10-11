@@ -78,7 +78,6 @@ var Application = (function () {
     Application.prototype.createListeners = function () {
     };
     Application.prototype.getCurrentProductId = function () {
-        //var productElement = $();
         var productElement = this.j$('[id^=product-]');
         if (productElement != undefined) {
             var productId = productElement.data("productid");
@@ -175,8 +174,10 @@ var Application = (function () {
         }
         this.currentTemplateIndex = index;
         this.currentTemplate = this.templates.get(this.currentTemplateIndex);
+        console.log("current template:", this.currentTemplate);
         EventBus.dispatchEvent("TEMPLATE_CHANGED", this.currentTemplate);
-        this.createTemplateElement(1);
+        var coeff = 1;
+        this.createTemplateElement(coeff);
     };
     return Application;
 }());

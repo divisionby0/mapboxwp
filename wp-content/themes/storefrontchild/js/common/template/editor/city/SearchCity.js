@@ -8,8 +8,10 @@
 ///<reference path="../../TemplateUtil.ts"/>
 var SearchCity = (function () {
     function SearchCity(j$, currentTemplate) {
+        console.log("new SearchCity");
         this.j$ = j$;
         this.currentTemplate = currentTemplate;
+        this.createListeners();
         this.getGeocodingAdminData();
     }
     SearchCity.prototype.setDefaultCity = function () {
@@ -48,7 +50,7 @@ var SearchCity = (function () {
     SearchCity.prototype.onGeocodingAdminDataReady = function () {
         this.createGeocodingService();
         this.create();
-        this.createListeners();
+        //this.createListeners();
         this.setDefaultCity();
     };
     SearchCity.prototype.createGeocodingService = function () {
@@ -61,12 +63,11 @@ var SearchCity = (function () {
     };
     SearchCity.prototype.createListeners = function () {
         var _this = this;
+        console.log("createListeners()");
         EventBus.addEventListener(EditorEvent.CITY_CHANGED, function (data) { return _this.onCityChanged(data); });
-        // find city by template's data
-        //EventBus.addEventListener(GeocodingService.ON_GEOCODING_RESULT, (data)=>this.onDefaultCityGeocodingResult(data));
-        //this.getDefaultCity();
     };
     SearchCity.prototype.onCityChanged = function (data) {
+        console.log("onCityChanged data=", data);
         var coord = data.coord;
         var city = data.city;
         this.j$("#user_lat").val(parseFloat(coord[0]).toFixed(4));
@@ -77,6 +78,7 @@ var SearchCity = (function () {
         this.currentTemplate.setLng(coord[1]);
         this.currentCity = city;
         this.currentCoord = coord;
+        console.log("coord changed");
         EventBus.dispatchEvent(EditorEvent.COORDINATES_CHANGED, coord);
         EventBus.dispatchEvent("UPDATE_STARMAP", null);
     };

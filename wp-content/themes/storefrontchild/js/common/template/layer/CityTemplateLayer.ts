@@ -9,8 +9,10 @@ class CityTemplateLayer extends TextTemplateLayer{
     }
 
     protected onDestroy():void {
+        /*
         EventBus.removeEventListener(EditorEvent.CITY_CHANGED, (data)=>this.onCityChanged(data));
         EventBus.removeEventListener(EditorEvent.CITY_VISIBILITY_CHANGED, (data)=>this.onCityVisibilityChanged(data));
+        */
     }
     
     protected createListener() {

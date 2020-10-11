@@ -111,7 +111,6 @@ class Application{
     }
     
     private getCurrentProductId():string{
-        //var productElement = $();
         var productElement = this.j$('[id^=product-]');
         if(productElement!=undefined){
             var productId:string = productElement.data("productid");
@@ -230,8 +229,11 @@ class Application{
         this.currentTemplateIndex = index;
         this.currentTemplate = this.templates.get(this.currentTemplateIndex);
 
+        console.log("current template:",this.currentTemplate);
+
         EventBus.dispatchEvent("TEMPLATE_CHANGED", this.currentTemplate);
 
-        this.createTemplateElement(1);
+        var coeff:number = 1;
+        this.createTemplateElement(coeff);
     }
 }

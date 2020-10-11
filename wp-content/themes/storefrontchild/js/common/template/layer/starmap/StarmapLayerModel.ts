@@ -21,7 +21,6 @@ class StarmapLayerModel extends TemplateLayer {
 
     constructor(id:string, aspectRatio:number, type:string, left:any = null, top:any = null, right:any = null, bottom:any = null, changeable:boolean = false, color:string = "0", backgroundColor:string, constellationColor:string, borderColor:string, borderWeight:number) {
         super(id, aspectRatio, type, left, top, right, bottom, changeable);
-        console.log("new StarmapLayerModel");
         this.starsColor = color;
         this.backgroundColor = backgroundColor;
         this.constellationColor = constellationColor;
@@ -59,12 +58,11 @@ class StarmapLayerModel extends TemplateLayer {
     }
 
     public onCityChanged(data:any):void {
-        //console.log("onCityChanged this.view=" + this.view);
         this.currentCity = data.city;
         this.currentCoord = data.coord;
 
         if (this.view) {
-            (this.view as StarmapLayerView).setCoord(data.coord);
+            (this.view as StarmapLayerView).setCoord(this.currentCoord);
         }
     }
     
@@ -150,7 +148,6 @@ class StarmapLayerModel extends TemplateLayer {
 
     public setHasConstellations(value:boolean):void {
         this.hasConstellations = value;
-        console.log("setHasConstellations this.view=",(this.view as StarmapLayerView));
         try {
             (this.view as StarmapLayerView).setHasConstellations(this.hasConstellations);
         }

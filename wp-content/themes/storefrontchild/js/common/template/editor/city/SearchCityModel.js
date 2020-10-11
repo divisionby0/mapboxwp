@@ -15,7 +15,7 @@ var SearchCityModel = (function () {
         this.view.clear();
     };
     SearchCityModel.prototype.onGeocodingResult = function (data) {
-        console.log("onGeocodingResult data=", data);
+        //console.log("onGeocodingResult data=",data);
         this.view.enable();
         var resultParser = new SearchCityResultParses();
         var resultData = resultParser.parse(data);

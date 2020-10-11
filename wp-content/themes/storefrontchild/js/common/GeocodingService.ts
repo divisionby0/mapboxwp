@@ -22,10 +22,7 @@ class GeocodingService{
     }
 
     public getCoordinates(cityName:string):void{
-        console.log("getCoordinates cityName="+cityName);
         var url:string = this.buildUrl(cityName);
-
-        console.log("url=",url);
         /*
         this.j$.ajax({
             type: "POST",

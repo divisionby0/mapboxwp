@@ -18,6 +18,7 @@
 ///<reference path="layer/MapCoordinatesTemplateLayer.ts"/>
 var TemplatesParser = (function () {
     function TemplatesParser(j$) {
+        this.starmaps = new Array(); // prevent GC ?
         this.j$ = j$;
         this._that = this;
     }
@@ -210,7 +211,9 @@ var TemplatesParser = (function () {
                         var borderColor = layerData.getAttribute("borderColor");
                         var borderWeight = parseFloat(layerData.getAttribute("borderWeight"));
                         templateLayer = new StarmapLayerModel(id, aspectRatio, type, left, top, right, bottom, changeable, starsColor, backgroundColor, constellationColor, borderColor, borderWeight);
-                        new StarmapLayerController(templateLayer);
+                        var starmapLayerController = new StarmapLayerController(templateLayer);
+                        this.starmaps.push(starmapLayerController);
+                        console.log("new starmap layer controller added ", starmapLayerController);
                         layers.add(templateLayer);
                         break;
                     case LayerType.MAP_LAYER_TYPE:

@@ -17,8 +17,9 @@ var CityListRenderer = (function () {
         container.click(function (event) { return _this.onClick(event); });
     }
     CityListRenderer.prototype.onClick = function (event) {
-        console.log("onClick city: " + this.data.name);
+        console.log("onClick city: ", this.data);
         EventBus.dispatchEvent(EditorEvent.CITY_CHANGED, { coord: this.data.coord, country: this.data.country, city: this.data.name }); // TODO после print перестает работать смена города
+        console.log("event dispatch complete");
     };
     return CityListRenderer;
 }());

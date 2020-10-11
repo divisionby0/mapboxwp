@@ -9,7 +9,6 @@ var SearchCityController = (function () {
         EventBus.addEventListener(GeocodingService.ON_GEOCODING_RESULT, function (data) { return _this.onGeocodingResult(data); });
     }
     SearchCityController.prototype.onSearchCityName = function (name) {
-        console.log("onSearchCityName name=" + name);
         this.model.findCoordinates(name);
     };
     SearchCityController.prototype.onGeocodingResult = function (data) {

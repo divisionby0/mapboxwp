@@ -3,8 +3,9 @@ class StarmapLayerController{
     private model:StarmapLayerModel;
     
     constructor(model:StarmapLayerModel){
-        //console.log("new StarmapLayerController");
+
         this.model = model;
+        console.log("new StarmapLayerController id=",this.model.getId());
         EventBus.addEventListener(EditorEvent.DATE_TIME_CHANGED, (date)=>this.onDateTimeChanged(date));
         EventBus.addEventListener(EditorEvent.CITY_CHANGED, (data)=>this.onCityChanged(data));
 
@@ -28,7 +29,6 @@ class StarmapLayerController{
     }
 
     private onCityChanged(data:any) {
-        //console.log("onCityChanged data=",data);
         this.model.onCityChanged(data);
     }
 }

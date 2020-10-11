@@ -31,7 +31,6 @@ var TemplateElementView = (function () {
         var viewsIterator = this.views.getIterator();
         while (viewsIterator.hasNext()) {
             var currentLayerView = viewsIterator.next();
-            console.log("destroying currentLayerView=", currentLayerView);
             if (currentLayerView) {
                 currentLayerView.destroy();
                 currentLayerView = null;
@@ -108,7 +107,6 @@ var TemplateElementView = (function () {
                     layer.setView(layerView);
                     break;
             }
-            console.log();
             this.views.add(layerView);
         }
         this.resize();

@@ -21,7 +21,7 @@ class SearchCityModel{
     }
     
     public onGeocodingResult(data:any):void{
-        console.log("onGeocodingResult data=",data);
+        //console.log("onGeocodingResult data=",data);
         
         this.view.enable();
 

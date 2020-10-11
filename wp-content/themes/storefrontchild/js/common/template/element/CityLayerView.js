@@ -10,11 +10,12 @@ var CityLayerView = (function (_super) {
         _super.apply(this, arguments);
     }
     CityLayerView.prototype.onDestroy = function () {
-        var _this = this;
         _super.prototype.onDestroy.call(this);
-        EventBus.removeEventListener(EditorEvent.CITY_CHANGED, function (data) { return _this.onCityChanged(data); });
-        EventBus.removeEventListener(EditorEvent.TEXT_1_CHANGED, function (data) { return _this.onCityTextChanged(data); });
-        EventBus.removeEventListener(EditorEvent.CITY_VISIBILITY_CHANGED, function (data) { return _this.onCityVisibilityChanged(data); });
+        /*
+        EventBus.removeEventListener(EditorEvent.CITY_CHANGED, (data)=>this.onCityChanged(data));
+        EventBus.removeEventListener(EditorEvent.TEXT_1_CHANGED, (data)=>this.onCityTextChanged(data));
+        EventBus.removeEventListener(EditorEvent.CITY_VISIBILITY_CHANGED, (data)=>this.onCityVisibilityChanged(data));
+        */
     };
     CityLayerView.prototype.createListeners = function () {
         var _this = this;

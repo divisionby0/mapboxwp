@@ -1,5 +1,3 @@
-///<reference path="../collections/List.ts"/>
-///<reference path="../collections/Map.ts"/>
 module EventBus{
     var listeners:Map<any> = new Map('listeners');
 

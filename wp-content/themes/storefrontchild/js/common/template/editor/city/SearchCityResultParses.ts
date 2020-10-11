@@ -11,8 +11,6 @@ class SearchCityResultParses{
     public parse(data:any):any{
         var collection:List<any> = new List<any>("cities");
         var status:string = data.status;
-
-        console.log("parsing geocoding result...");
         
         if(status == "success"){
             var responseStatus:string = data.data.status;

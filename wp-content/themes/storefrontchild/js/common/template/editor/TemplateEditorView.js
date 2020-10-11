@@ -30,7 +30,6 @@ var TemplateEditorView = (function () {
     };
     TemplateEditorView.prototype.reset = function (settings) {
         var _this = this;
-        console.log("reset");
         if (this.constellationLinesButton) {
             settings.constellations ? this.constellationLinesButton.attr('checked', true) : this.constellationLinesButton.attr('checked', false);
         }
@@ -72,7 +71,6 @@ var TemplateEditorView = (function () {
         this.text_3_input.on("input", function () { return _this.onText3Changed(); });
     };
     TemplateEditorView.prototype.addControls = function () {
-        console.log("addControls()");
         this.constellationLinesButton = this.j$('#constellationLinesButton');
         this.starsMultiColorsButton = this.j$('#starsMultiColorsButton');
         this.dateButton = this.j$('#dateButton');

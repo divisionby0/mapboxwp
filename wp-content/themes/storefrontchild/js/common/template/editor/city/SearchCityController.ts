@@ -11,7 +11,6 @@ class SearchCityController{
     }
     
     private onSearchCityName(name:string):void{
-        console.log("onSearchCityName name="+name);
         this.model.findCoordinates(name);
     }
 

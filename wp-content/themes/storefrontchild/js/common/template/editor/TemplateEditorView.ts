@@ -50,7 +50,6 @@ class TemplateEditorView{
     }
 
     public reset(settings:any):void {
-        console.log("reset");
         if(this.constellationLinesButton){
             settings.constellations ? this.constellationLinesButton.attr('checked',true) : this.constellationLinesButton.attr('checked',false);
         }
@@ -98,7 +97,6 @@ class TemplateEditorView{
     }
 
     protected addControls():void {
-        console.log("addControls()");
         this.constellationLinesButton = this.j$('#constellationLinesButton');
 
         this.starsMultiColorsButton = this.j$('#starsMultiColorsButton');
@@ -161,7 +159,6 @@ class TemplateEditorView{
     }
 
     private sendAutomaticSettingsChanged():void {
-
         this.onConstellationsChanged();
         this.onStarsChanged();
         this.onCircleBorderChanged();

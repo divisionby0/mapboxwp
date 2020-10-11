@@ -2,8 +2,8 @@
 var StarmapLayerController = (function () {
     function StarmapLayerController(model) {
         var _this = this;
-        //console.log("new StarmapLayerController");
         this.model = model;
+        console.log("new StarmapLayerController id=", this.model.getId());
         EventBus.addEventListener(EditorEvent.DATE_TIME_CHANGED, function (date) { return _this.onDateTimeChanged(date); });
         EventBus.addEventListener(EditorEvent.CITY_CHANGED, function (data) { return _this.onCityChanged(data); });
         EventBus.addEventListener(EditorEvent.STARS_CHANGED, function (value) { return _this.onStarsChanged(value); });
@@ -23,7 +23,6 @@ var StarmapLayerController = (function () {
         this.model.onDateTimeChanged(date);
     };
     StarmapLayerController.prototype.onCityChanged = function (data) {
-        //console.log("onCityChanged data=",data);
         this.model.onCityChanged(data);
     };
     return StarmapLayerController;
