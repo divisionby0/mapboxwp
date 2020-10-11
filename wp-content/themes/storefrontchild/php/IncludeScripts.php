@@ -88,6 +88,10 @@ class IncludeScripts
 
         wp_enqueue_script('markupHelper', CHILD_DIR .'/js/markup_helper.js', array(), false, true);
 
+        wp_enqueue_script('cart', CHILD_DIR .'/js/cart/Cart.js', array(), false, true);
+        wp_enqueue_script('setQuantityRequest', CHILD_DIR .'/js/cart/request/SetQuantityRequest.js', array(), false, true);
+        wp_enqueue_script('emptyCartRequest', CHILD_DIR .'/js/cart/request/EmptyCartRequest.js', array(), false, true);
+        wp_enqueue_script('getCartEmptyInfoPhraseRequest', CHILD_DIR .'/js/cart/request/GetCartEmptyInfoPhraseRequest.js', array(), false, true);
         wp_enqueue_script('appEvent', CHILD_DIR .'/js/common/AppEvent.js', array(), false, true);
         wp_enqueue_script('app', CHILD_DIR .'/js/common/Application.js', array(), false, true);
         

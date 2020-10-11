@@ -16,6 +16,8 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+global $currencySymbol;
+$totalCaptionText = esc_attr( translate( 'Total', 'woocommerce' ) );
 ?>
 
 <div class="cart_totals <?php echo ( WC()->customer->has_calculated_shipping() ) ? 'calculated_shipping' : ''; ?>">
@@ -29,18 +31,15 @@ defined( 'ABSPATH' ) || exit;
 			<?php showTotalAndDeliveryBlock();?>
 		</div>
 		<div class="shopping__totalBlockSum">
-
+			<p class="shopping__totalBlockSumText"><?php echo $totalCaptionText;?></p>
+			<p class="woocommerce-Price-amount amount shopping__totalBlockSumNum"><?php echo number_format(WC()->cart->total,0,"", " ");?> <span class="woocommerce-Price-currencySymbol"><?php echo $currencySymbol;?></span></p>
 		</div>
 	</div>
 
 
 	<?php do_action( 'woocommerce_before_cart_totals' ); ?>
 
-	<h2>
-		<?php esc_html_e( 'Cart totals', 'woocommerce' ); ?>
-	</h2>
-
-	<table cellspacing="0" class="shop_table shop_table_responsive">
+	<table cellspacing="0" class="shop_table shop_table_responsive" style="display: none;">
 		<tr class="cart-subtotal">
 			<th><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
 			<td data-title="<?php esc_attr_e( 'Subtotal', 'woocommerce' ); ?>"><?php wc_cart_totals_subtotal_html(); ?></td>
@@ -118,8 +117,12 @@ defined( 'ABSPATH' ) || exit;
 
 	</table>
 
-	<div class="wc-proceed-to-checkout">
+	<div class="wc-proceed-to-checkout" style="margin-top: 1em!important;">
 		<?php do_action( 'woocommerce_proceed_to_checkout' ); ?>
+	</div>
+
+	<div class="wc-proceed-to-checkout">
+		<div id="emptyCart" class="checkout-button button alt wc-forward">Очистить корзину</div>
 	</div>
 
 	<?php do_action( 'woocommerce_after_cart_totals' ); ?>

@@ -1,7 +1,6 @@
 console.log("STORE");
 $( document ).ready(function() {
     createListeners();
-    console.log("product category = ",productCategory);
     switch(productCategory){
         case "Stars":
             new AstroApplication($);
@@ -12,8 +11,17 @@ $( document ).ready(function() {
             //getCityTemplates();
             break;
     }
+    
+    afterInitActions();
 });
 
+
+function afterInitActions(){
+    var cartPageElement = $("#cartPageElement");
+    if(cartPageElement.text() == "isCart"){
+        new Cart($);
+    }
+}
 
 function createListeners(){
     $(".single_add_to_cart_button").click((event)=>onAddToCardButtonClicked(event));

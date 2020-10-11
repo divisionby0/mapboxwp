@@ -23,13 +23,15 @@ jQuery(".modalCart__itemCountCircle-plus").click(function () {
     if(num == 2) jQuery(this).parent().find(".modalCart__itemCountCircle-minus").removeClass("modalCart__itemCountCircle-gray");
     jQuery(this).parent().find(".modalCart__itemCountNum").html(num);
 });
+
 jQuery(".modalCart__itemCountCircle-minus").click(function () {
     var num = jQuery(this).parent().find(".modalCart__itemCountNum").html();
     num = Number(num);
-    if(num > 1) num--;
-    if(num == 1) jQuery(this).parent().find(".modalCart__itemCountCircle-minus").addClass("modalCart__itemCountCircle-gray");
+    if(num > -1) num--;
+    if(num == -1) jQuery(this).parent().find(".modalCart__itemCountCircle-minus").addClass("modalCart__itemCountCircle-gray");
     jQuery(this).parent().find(".modalCart__itemCountNum").html(num);
 });
+
 jQuery(".modalCart__close").click(function () {
     var arr = document.querySelectorAll(".modalCart__item");
     if(arr.length > 1) {

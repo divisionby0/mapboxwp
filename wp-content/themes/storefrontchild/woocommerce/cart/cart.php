@@ -17,10 +17,14 @@
 
 defined( 'ABSPATH' ) || exit;
 
-do_action( 'woocommerce_before_cart' ); ?>
+$uploadsUrl = wp_upload_dir()["baseurl"];
+do_action( 'woocommerce_before_cart' );
+?>
 <div class="shopping__block">
     <form class="woocommerce-cart-form" action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post">
-        <?php do_action( 'woocommerce_before_cart_table' ); ?>
+        <?php
+        do_action( 'woocommerce_before_cart_table' );
+        ?>
 
         <div class="shopping__items">
             <?php
@@ -30,12 +34,17 @@ do_action( 'woocommerce_before_cart' ); ?>
 
                 if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
                     $product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
-                    //$product_name = esc_attr_e( 'Product', 'woocommerce' );
-                    //echo "<h2>product name: ".$product_name."</h2>";
+
+                    //$key = $cart_item["distinctive_key"];
+                    $key = $cart_item["key"];
+
+                    $quantity =  $cart_item["quantity"];
                     ?>
-                    <div class="shopping__item">
+                    <div class="shopping__item" data-key="<?php echo $key;?>">
                         <?php
-                        $thumbnail = get_the_post_thumbnail_url($product_id);
+                        $thumbnail = $uploadsUrl."/customerMaps/".$cart_item["userImagePreview"];
+
+
                         ?>
                         <img src="<?php echo $thumbnail;?>" alt="card" class="modalCart__itemImg">
                         <div class="modalCart__itemContent">
@@ -46,7 +55,9 @@ do_action( 'woocommerce_before_cart' ); ?>
                                 <div class="modalCart__itemCountCircle modalCart__itemCountCircle-minus modalCart__itemCountCircle-gray">
                                     <span>-</span>
                                 </div>
-                                <p class="modalCart__itemCountNum">1</p>
+
+                                <p class="modalCart__itemCountNum"><?php echo $quantity;?></p>
+
                                 <div class="modalCart__itemCountCircle modalCart__itemCountCircle-plus">
                                     <span>+</span>
                                 </div>
@@ -58,7 +69,6 @@ do_action( 'woocommerce_before_cart' ); ?>
             }
             ?>
         </div>
-        
     </form>
 
     <?php do_action( 'woocommerce_before_cart_collaterals' ); ?>

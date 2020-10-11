@@ -14,6 +14,9 @@ include_once('php/ImageSaver.php');
 include_once('php/AstroImageSaver.php');
 include_once('php/ImagePreviewCreator.php');
 include_once('php/MapboxAdminSettings.php');
+include_once('php/cart/AddToCart.php');
+include_once('php/cart/GetFromCart.php');
+include_once('php/cart/CartItem.php');
 
 $currencySymbol;
 
@@ -64,14 +67,11 @@ function createAstroMapOrder(){
     if( $imageData!= '') {
         $astroImageSaver = new AstroImageSaver($imageData);
         $createImageResult = $astroImageSaver->save();
-        
-        // TODO add to cart
-        $resultData = json_decode($createImageResult);
-        $image = $resultData->image;
-        $preview = $resultData->preview;
-        
-        $result = WC()->cart->add_to_cart( $productId, 1, 0, array(), array("userImagePreview"=>$preview, "printSizeImage"=>$image) );
-        echo "product added to cart. productId=".$productId." preview=".$preview." result=".$result;
+
+        $addToCart = new AddToCart($createImageResult, $productId);
+        $data = $addToCart->execute();
+
+        echo "product added to cart. productId=".$productId." preview=".$data["preview"]." result=".$data["result"];
     }
     else{
         echo "Empty image data";
@@ -293,7 +293,6 @@ function storefront_before_content() {
     <?php
 }
 
-
 /*  remove search in header */
 add_action( 'init', 'jk_remove_storefront_header_search' );
 function jk_remove_storefront_header_search() {
@@ -301,44 +300,20 @@ function jk_remove_storefront_header_search() {
 }
 
 function showCartOrders(){
-    $names = array();
-    $cart = WC()->cart->get_cart();
-    $items = array();
-
-    //var_dump($cart);
-
     global $currencySymbol;
 
-    foreach ($cart as $cart_item_key => $cart_item ) {
-        echo "<p>cart item</p>";
-        $_product   = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-        //$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+    $cartItemsGetter = new GetFromCart();
+    $cartItems = $cartItemsGetter->execute();
 
-        if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
-            $productTitle = $_product->get_title();
-
-            array_push($items, $cart_item);
-
-            if (!in_array($productTitle, $names))
-            {
-                array_push($names, $productTitle);
-            }
-        }
-    }
-
-    for($i=0; $i<sizeof($items); $i++){
-        echo "<div class='shopping__totalBlockOrderItem'>";
-            $cartItem = $items[$i];
-            $itemName = $cartItem["data"]->get_name();
-            $itemQuantity = $cartItem["quantity"];
-
-            $price = $cartItem['data']->get_price();
-
-            echo "<p class='shopping__totalBlockOrderItemName'>".$itemName."</p>";
-            echo "<p class='shopping__totalBlockOrderItemNum'>x".$itemQuantity."</p>";
-            echo "<p class='shopping__totalBlockOrderItemPrice'>".$price;
-            echo "<span class='woocommerce-Price-currencySymbol'> ".$currencySymbol."</span>";
-            echo "</p>";
+    for($i=0; $i<sizeof($cartItems); $i++){
+        $cartItem = $cartItems[$i];
+        $key = $cartItem->getKey();
+        echo "<div class='shopping__totalBlockOrderItem' data-key='".$key."'>";
+        echo "<p class='shopping__totalBlockOrderItemName'>".$cartItem->getName()."</p>";
+        echo "<p class='shopping__totalBlockOrderItemNum'>x".$cartItem->getQuantity()."</p>";
+        echo "<p class='shopping__totalBlockOrderItemPrice'>".number_format($cartItem->getPrice(),0,"", " ");
+        echo "<span class='woocommerce-Price-currencySymbol'> ".$currencySymbol."</span>";
+        echo "</p>";
         echo "</div>";
     }
 }
@@ -354,7 +329,7 @@ function showTotalAndDeliveryBlock(){
 
     echo "<div class='shopping__totalBlockDeliveryItem'>";
     echo "<p class='shopping__totalBlockDeliveryText'>".$captionText."</p>";
-    echo "<p class='woocommerce-Price-amount amount shopping__totalBlockDeliveryNum'>".$amount2."";
+    echo "<p class='woocommerce-Price-amount amount shopping__totalBlockDeliveryNum'>".number_format($amount2,0,"", " ")."";
 
     echo "<span class='woocommerce-Price-currencySymbol'> ".$currencySymbol."</span></p>";
     echo "</div>";
@@ -377,16 +352,8 @@ function addActionsToHeader(){
     if($isCartPage){
         global $currencySymbol;
         $currencySymbol = get_woocommerce_currency_symbol();
-
-        /*
-        echo "<p>adding test product...</p>";
-        $testProduct = array();
-        WC()->cart->add_to_cart( 29 );
-
-        echo "<p>cart:</p>";
-        $WC_Cart = WC()->cart->get_cart();
-        var_dump($WC_Cart);
-        */
+        
+        echo "<div id='cartPageElement' style='display: none;'>isCart</div>";
     }
 }
 
@@ -404,6 +371,29 @@ function addNewProductInsteadChangeQuantity( $cart_item_data, $product_id ) {
     $cart_item_data['distinctive_key'] = $distinctive_cart_item_key;
     return $cart_item_data;
 }
+
+function setCartQuantity(){
+    $key = $_POST['key'];
+    $newQuantity = $_POST['newQuantity'];
+    
+    $result = WC()->cart->set_quantity( $key, $newQuantity);
+
+    echo json_encode($result);
+    wp_die();
+}
+
+function emptyCart(){
+    $result = WC()->cart->empty_cart();
+
+    echo json_encode($result);
+    wp_die();
+}
+
+function getCartEmptyInfoHtml(){
+    echo wp_kses_post( apply_filters( 'wc_empty_cart_message', __( 'Your cart is currently empty.', 'woocommerce' ) ) );
+    wp_die();
+}
+
 add_filter('woocommerce_add_cart_item_data','addNewProductInsteadChangeQuantity',11,2);
 add_filter('woocommerce_is_sold_individually','__return_true' );
 // end of  add same product to cart twice instead of changing quantity
@@ -436,12 +426,17 @@ add_action( 'wp_ajax_nopriv_get_city_map_templates', 'getCityMapTemplates' );
 add_action( 'wp_ajax_create_astro_map_order', 'createAstroMapOrder' );
 add_action( 'wp_ajax_nopriv_create_astro_map_order', 'createAstroMapOrder' );
 
+add_action( 'wp_ajax_cart_set_quantity', 'setCartQuantity' );
+add_action( 'wp_ajax_nopriv_cart_set_quantity', 'setCartQuantity' );
+
+add_action( 'wp_ajax_empty_cart', 'emptyCart' );
+add_action( 'wp_ajax_nopriv_empty_cart', 'emptyCart' );
+
+add_action( 'wp_ajax_get_cart_empty_info_html', 'getCartEmptyInfoHtml' );
+add_action( 'wp_ajax_nopriv_get_cart_empty_info_html', 'getCartEmptyInfoHtml' );
 
 add_action( 'wp_ajax_getMapboxAccessData', 'getMapboxAccessData' );
 add_action( 'wp_ajax_nopriv_getMapboxAccessData', 'getMapboxAccessData' );
-
-add_action( 'wp_ajax_testAjax', 'createAstroMapOrder' );
-add_action( 'wp_ajax_nopriv_testAjax', 'createAstroMapOrder' );
 
 add_action( 'wp_ajax_getGeocodingAdminData', 'getGeocodingAdminData' );
 add_action( 'wp_ajax_nopriv_getGeocodingAdminData', 'getGeocodingAdminData' );
