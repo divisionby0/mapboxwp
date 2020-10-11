@@ -14,7 +14,7 @@ var Cart = (function () {
     }
     Cart.prototype.createItems = function () {
         var _this = this;
-        var elements = this.j$(".shopping__item");
+        var elements = this.getElements();
         var i = 0;
         var total = elements.length;
         for (i = 0; i < total; i++) {
@@ -27,6 +27,9 @@ var Cart = (function () {
             decrementButton.click(function (event) { return _this.onDecrementButtonClicked(event); });
             incrementButton.click(function (event) { return _this.onIncrementButtonClicked(event); });
         }
+    };
+    Cart.prototype.getElements = function () {
+        return this.j$(".shopping__item");
     };
     Cart.prototype.onDecrementButtonClicked = function (event) {
         var key = this.getKey(event);
@@ -75,7 +78,6 @@ var Cart = (function () {
         if (newQuantity == 0) {
             this.removeSidebarElement(key);
             var cartIsEmpty = this.detectCartIsEmpty();
-            console.log("cart is empty = ", cartIsEmpty);
             if (cartIsEmpty == true) {
                 this.j$(".wc-proceed-to-checkout").remove();
                 this.j$("#emptyCart").remove();

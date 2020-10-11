@@ -5,8 +5,8 @@
 class Cart{
     private j$:any;
 
-    private quantityElements:any[];
-    private currencySymbol:string = "дублоноФФ :)";
+    protected quantityElements:any[];
+    protected currencySymbol:string = "дублоноФФ :)";
 
     constructor(j$:any){
         this.j$ = j$;
@@ -19,7 +19,7 @@ class Cart{
     }
 
     private createItems():void {
-        var elements:any[] = this.j$(".shopping__item");
+        var elements:any[] = this.getElements();
         var i:number =0;
         var total:number = elements.length;
 
@@ -37,6 +37,10 @@ class Cart{
             decrementButton.click((event)=>this.onDecrementButtonClicked(event));
             incrementButton.click((event)=>this.onIncrementButtonClicked(event));
         }
+    }
+    
+    protected getElements():any[]{
+        return this.j$(".shopping__item");
     }
 
     private onDecrementButtonClicked(event:any):void {
@@ -71,7 +75,7 @@ class Cart{
         return cartItemElement.data("key");
     }
 
-    private createEmptyButton():void {
+    protected createEmptyButton():void {
         var emptyButton:any = this.j$("#emptyCart");
         emptyButton.click(()=>this.emptyButtonClicked());
     }
@@ -101,8 +105,6 @@ class Cart{
             this.removeSidebarElement(key);
 
             var cartIsEmpty:boolean = this.detectCartIsEmpty();
-
-            console.log("cart is empty = ",cartIsEmpty);
 
             if(cartIsEmpty == true){
                 this.j$(".wc-proceed-to-checkout").remove();

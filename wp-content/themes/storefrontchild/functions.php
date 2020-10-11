@@ -17,6 +17,8 @@ include_once('php/MapboxAdminSettings.php');
 include_once('php/cart/AddToCart.php');
 include_once('php/cart/GetFromCart.php');
 include_once('php/cart/CartItem.php');
+include_once('php/cart/MiniCartElement.php');
+include_once('php/cart/MiniCartItemRenderer.php');
 
 $currencySymbol;
 
@@ -197,6 +199,7 @@ END OF storefront-template-functions.php OVERRIDE
 function storefront_header_cart() {
 }
 
+
 /* override mobile footer with cart */
 function storefront_handheld_footer_bar(){
 }
@@ -241,26 +244,16 @@ function storefront_site_branding() {
         ?>
     </div>
 
-    <?php $assetsFolder = get_stylesheet_directory_uri()."/assets/"; ?>
+    <?php
+    $isCartPage = is_page( 'cart' );
 
-    <div class="cart__btn">
-        <img src="<?php echo $assetsFolder."cart.svg"; ?>" alt="cart" class="cart__icon">
-        <span class="cart__btnNumber cart__btnNumber-active">2</span>
-    </div>
-    <div class="cart__block">
-        <div class="modalCart">
-            <div class="modalCart__content">
-                <div id="modalCartItems" class="modalCart__items">
-
-                </div>
-                <div class="modalCart__sum">
-                    <p class="modalCart__sumText">
-                        Подытог:<span id="modalCartSum" class="modalCart__sumNum">5 000 ₽</span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+    if($isCartPage != 1){
+        $thumbnailsBaseUrl = wp_upload_dir()["baseurl"]."/customerMaps/";
+        new MiniCartElement($thumbnailsBaseUrl, get_woocommerce_currency_symbol());
+        ?>
+        <?php
+    }
+    ?>
     <?php
 }
 

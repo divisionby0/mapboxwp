@@ -21,9 +21,6 @@ foreach ($terms as $term) {
 
 $content_post = get_post($post->ID);
 $content = $content_post->post_content;
-//$content = apply_filters('the_content', $content);
-//$content = str_replace(']]>', ']]&gt;', $content);
-//echo $content;
 ?>
 
 <body <?php body_class(); ?>>
@@ -56,7 +53,6 @@ $content = $content_post->post_content;
     }
     $style.="&#39;)";
     ?>
-
     <header id="masthead" class="<?php echo $class;?>" role="banner" style="<?php storefront_header_styles(); echo $style;?>;">
         <div class="index__headerWrapper">
             <div class="site-branding">

@@ -16,7 +16,6 @@
  */
 
 defined( 'ABSPATH' ) || exit;
-
 $uploadsUrl = wp_upload_dir()["baseurl"];
 do_action( 'woocommerce_before_cart' );
 ?>
@@ -34,17 +33,13 @@ do_action( 'woocommerce_before_cart' );
 
                 if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
                     $product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
-
-                    //$key = $cart_item["distinctive_key"];
                     $key = $cart_item["key"];
-
                     $quantity =  $cart_item["quantity"];
                     ?>
+                    
                     <div class="shopping__item" data-key="<?php echo $key;?>">
                         <?php
                         $thumbnail = $uploadsUrl."/customerMaps/".$cart_item["userImagePreview"];
-
-
                         ?>
                         <img src="<?php echo $thumbnail;?>" alt="card" class="modalCart__itemImg">
                         <div class="modalCart__itemContent">

@@ -3,6 +3,7 @@ jQuery(".cart__btn").click(function () {
 });
 
 var modalCart = document.querySelector('.modalCart');
+
 function toggleModal() {
     modalCart.classList.toggle('show-modalCart');
 }
@@ -45,13 +46,15 @@ jQuery(".shopping__close").click(function () {
     jQuery(this).parent().remove();
 });
 
+/*
 $(document).mouseup(function (e){
     var div = $(".cart");
     if (!div.is(e.target)
         && div.has(e.target).length === 0) {
-        closeModal();
+        //closeModal();
     }
 });
+*/
 
 jQuery(".order__payItem").click(function () {
    jQuery(".order__payItem").removeClass("order__payItem-active");

@@ -1,5 +1,4 @@
 <?php
-
 get_header(); ?>
 	<h1>single</h1>
 	<div id="primary" class="content-area">

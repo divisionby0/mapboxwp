@@ -5,7 +5,8 @@
  * @package storefront
  */
 
-get_header("404"); ?>
+get_header("404"); 
+?>
 	<div id="primary" class="content-area">
 
 		<main id="main" class="site-main" role="main">
